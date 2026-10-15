@@ -32,6 +32,13 @@ npm run compodoc
 
 La cobertura se genera en `coverage/` y Compodoc en `documentation/`.
 
+## Módulos funcionales
+
+La aplicación incluye Usuarios, Productos, Categorías, Pedidos y Proveedores.
+Las rutas adicionales son `/categories`, `/orders` y `/suppliers`. Cada módulo
+usa un caso de uso y un contrato de repositorio; el provider selecciona la
+implementación local, Node.js o Spring Boot.
+
 ```
 src/app
 │
