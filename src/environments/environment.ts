@@ -16,6 +16,13 @@
  */
 export const environment = {
   /**
+   * Implementación de infraestructura utilizada por los providers.
+   *
+   * Cambiar este valor permite integrar Node.js o Spring Boot sin
+   * modificar casos de uso ni componentes de presentación.
+   */
+  backend: 'local' as 'local' | 'node' | 'springboot',
+  /**
    * URL base del backend en NodeJS de la aplicación.
    *
    * @remarks

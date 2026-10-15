@@ -10,6 +10,19 @@ import { UserSpringBootRepositoryImpl } from './core/infrastructure/repositories
 import { ProductSpringBootRepositoryImpl } from './core/infrastructure/repositories/springboot-implementation/product-springboot.repository.impl';
 import { UserLocalRepositoryImpl } from './core/infrastructure/repositories/local-implementation/user-local.repository.impl';
 import { ProductLocalRepositoryImpl } from './core/infrastructure/repositories/local-implementation/product-local.repository.impl';
+import { environment } from '../environments/environment';
+
+const userRepositoryImplementation = {
+  local: UserLocalRepositoryImpl,
+  node: UserNodeRepositoryImpl,
+  springboot: UserSpringBootRepositoryImpl,
+}[environment.backend];
+
+const productRepositoryImplementation = {
+  local: ProductLocalRepositoryImpl,
+  node: ProductNodeRepositoryImpl,
+  springboot: ProductSpringBootRepositoryImpl,
+}[environment.backend];
 
 /**
  * Configuración principal de la aplicación Angular.
@@ -38,17 +51,8 @@ export const appConfig: ApplicationConfig = {
    */
   providers: [
 
-    //Local Providers
-    { provide: UserRepository, useClass: UserLocalRepositoryImpl },
-    { provide: ProductRepository, useClass: ProductLocalRepositoryImpl },
-    
-    //Node Providers
-    //{ provide: UserRepository, useClass: UserNodeRepositoryImpl },
-    //{ provide: ProductRepository, useClass: ProductNodeRepositoryImpl },
-
-    //SpringBoot Providers
-    //{ provide: UserRepository, useClass: UserSpringBootRepositoryImpl },
-    //{ provide: ProductRepository, useClass: ProductSpringBootRepositoryImpl },
+    { provide: UserRepository, useClass: userRepositoryImplementation },
+    { provide: ProductRepository, useClass: productRepositoryImplementation },
 
     /**
      * Proveedor de listeners globales de errores del navegador.
