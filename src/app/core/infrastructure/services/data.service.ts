@@ -5,6 +5,9 @@ import { Observable, of } from "rxjs";
 import { environment } from "../../../../environments/environment";
 import { Product, ProductCategory } from "../../domain/models/product.model";
 import { User, UserEngineering } from "../../domain/models/user.model";
+import { Category } from "../../domain/models/category.model";
+import { Order } from "../../domain/models/order.model";
+import { Supplier } from "../../domain/models/supplier.model";
 
 /**
  * Servicio de infraestructura para obtención de datos.
@@ -197,6 +200,43 @@ export class DataService {
      */
     getAllProductsSpringBoot(countProducts: number): Observable<Product[]> {
         return this.httpClient.get<Product[]>(`${this.springBootUrl}/products/${countProducts}`);
+    }
+
+    getAllCategoriesLocal(count: number): Observable<Category[]> {
+        return of(Array.from({ length: count }, (_, index) => ({
+            id: index + 1, name: faker.commerce.department(), description: faker.commerce.productDescription()
+        })));
+    }
+    getAllCategoriesNode(count: number): Observable<Category[]> {
+        return this.httpClient.get<Category[]>(`${this.nodeUrl}/categories/${count}`);
+    }
+    getAllCategoriesSpringBoot(count: number): Observable<Category[]> {
+        return this.httpClient.get<Category[]>(`${this.springBootUrl}/categories/${count}`);
+    }
+    getAllOrdersLocal(count: number): Observable<Order[]> {
+        const statuses: Order['status'][] = ['Pendiente', 'Enviado', 'Entregado'];
+        return of(Array.from({ length: count }, (_, index) => ({
+            id: index + 1, customer: faker.person.fullName(),
+            total: Number(faker.commerce.price({ min: 20, max: 1000, dec: 2 })),
+            status: faker.helpers.arrayElement(statuses)
+        })));
+    }
+    getAllOrdersNode(count: number): Observable<Order[]> {
+        return this.httpClient.get<Order[]>(`${this.nodeUrl}/orders/${count}`);
+    }
+    getAllOrdersSpringBoot(count: number): Observable<Order[]> {
+        return this.httpClient.get<Order[]>(`${this.springBootUrl}/orders/${count}`);
+    }
+    getAllSuppliersLocal(count: number): Observable<Supplier[]> {
+        return of(Array.from({ length: count }, (_, index) => ({
+            id: index + 1, name: faker.company.name(), email: faker.internet.email(), phone: faker.phone.number()
+        })));
+    }
+    getAllSuppliersNode(count: number): Observable<Supplier[]> {
+        return this.httpClient.get<Supplier[]>(`${this.nodeUrl}/suppliers/${count}`);
+    }
+    getAllSuppliersSpringBoot(count: number): Observable<Supplier[]> {
+        return this.httpClient.get<Supplier[]>(`${this.springBootUrl}/suppliers/${count}`);
     }
 
 }
