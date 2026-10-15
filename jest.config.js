@@ -1,7 +1,12 @@
+const preset = require('jest-preset-angular/jest-preset');
+
 module.exports = {
-  preset: 'jest-preset-angular',
+  ...preset,
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   coverageReporters: ["html", "json", "lcov", "text", "clover"],
+  transformIgnorePatterns: [
+    "node_modules/(?!(.*\\.mjs$|@angular/common/locales/.*\\.js$|@faker-js/))"
+  ],
   
   modulePathIgnorePatterns: ["<rootDir>/dist/"],
   testPathIgnorePatterns: [

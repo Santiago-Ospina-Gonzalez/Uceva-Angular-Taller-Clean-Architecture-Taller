@@ -1,0 +1,3 @@
+<table class="table table-striped border"><thead><tr><th>Id</th><th>Nombre</th><th>Email</th><th>Teléfono</th></tr></thead><tbody>
+@for (supplier of suppliers; track supplier.id) { <tr><td>{{ supplier.id }}</td><td>{{ supplier.name }}</td><td>{{ supplier.email }}</td><td>{{ supplier.phone }}</td></tr> }
+</tbody></table>

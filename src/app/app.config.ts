@@ -10,6 +10,34 @@ import { UserSpringBootRepositoryImpl } from './core/infrastructure/repositories
 import { ProductSpringBootRepositoryImpl } from './core/infrastructure/repositories/springboot-implementation/product-springboot.repository.impl';
 import { UserLocalRepositoryImpl } from './core/infrastructure/repositories/local-implementation/user-local.repository.impl';
 import { ProductLocalRepositoryImpl } from './core/infrastructure/repositories/local-implementation/product-local.repository.impl';
+import { CategoryRepository } from './core/domain/repositories/category.repository';
+import { OrderRepository } from './core/domain/repositories/order.repository';
+import { SupplierRepository } from './core/domain/repositories/supplier.repository';
+import { CategoryLocalRepositoryImpl } from './core/infrastructure/repositories/local-implementation/category-local.repository.impl';
+import { OrderLocalRepositoryImpl } from './core/infrastructure/repositories/local-implementation/order-local.repository.impl';
+import { SupplierLocalRepositoryImpl } from './core/infrastructure/repositories/local-implementation/supplier-local.repository.impl';
+import { CategoryNodeRepositoryImpl } from './core/infrastructure/repositories/node-implementation/category-node.repository.impl';
+import { OrderNodeRepositoryImpl } from './core/infrastructure/repositories/node-implementation/order-node.repository.impl';
+import { SupplierNodeRepositoryImpl } from './core/infrastructure/repositories/node-implementation/supplier-node.repository.impl';
+import { CategorySpringBootRepositoryImpl } from './core/infrastructure/repositories/springboot-implementation/category-springboot.repository.impl';
+import { OrderSpringBootRepositoryImpl } from './core/infrastructure/repositories/springboot-implementation/order-springboot.repository.impl';
+import { SupplierSpringBootRepositoryImpl } from './core/infrastructure/repositories/springboot-implementation/supplier-springboot.repository.impl';
+import { environment } from '../environments/environment';
+
+const userRepositoryImplementation = {
+  local: UserLocalRepositoryImpl,
+  node: UserNodeRepositoryImpl,
+  springboot: UserSpringBootRepositoryImpl,
+}[environment.backend];
+
+const productRepositoryImplementation = {
+  local: ProductLocalRepositoryImpl,
+  node: ProductNodeRepositoryImpl,
+  springboot: ProductSpringBootRepositoryImpl,
+}[environment.backend];
+const categoryRepositoryImplementation = { local: CategoryLocalRepositoryImpl, node: CategoryNodeRepositoryImpl, springboot: CategorySpringBootRepositoryImpl }[environment.backend];
+const orderRepositoryImplementation = { local: OrderLocalRepositoryImpl, node: OrderNodeRepositoryImpl, springboot: OrderSpringBootRepositoryImpl }[environment.backend];
+const supplierRepositoryImplementation = { local: SupplierLocalRepositoryImpl, node: SupplierNodeRepositoryImpl, springboot: SupplierSpringBootRepositoryImpl }[environment.backend];
 
 /**
  * Configuración principal de la aplicación Angular.
@@ -38,17 +66,11 @@ export const appConfig: ApplicationConfig = {
    */
   providers: [
 
-    //Local Providers
-    { provide: UserRepository, useClass: UserLocalRepositoryImpl },
-    { provide: ProductRepository, useClass: ProductLocalRepositoryImpl },
-    
-    //Node Providers
-    //{ provide: UserRepository, useClass: UserNodeRepositoryImpl },
-    //{ provide: ProductRepository, useClass: ProductNodeRepositoryImpl },
-
-    //SpringBoot Providers
-    //{ provide: UserRepository, useClass: UserSpringBootRepositoryImpl },
-    //{ provide: ProductRepository, useClass: ProductSpringBootRepositoryImpl },
+    { provide: UserRepository, useClass: userRepositoryImplementation },
+    { provide: ProductRepository, useClass: productRepositoryImplementation },
+    { provide: CategoryRepository, useClass: categoryRepositoryImplementation },
+    { provide: OrderRepository, useClass: orderRepositoryImplementation },
+    { provide: SupplierRepository, useClass: supplierRepositoryImplementation },
 
     /**
      * Proveedor de listeners globales de errores del navegador.

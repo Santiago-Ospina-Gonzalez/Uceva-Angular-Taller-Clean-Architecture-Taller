@@ -1,5 +1,44 @@
 # Clean Architecture en Angular
 
+## Ejecución
+
+```powershell
+npm install
+npm run start
+```
+
+La aplicación queda disponible en `http://localhost:4200`.
+
+## Selección del backend
+
+Los casos de uso y componentes dependen únicamente de contratos de dominio. La
+implementación se selecciona en `src/environments/environment.ts` mediante
+`backend`:
+
+```ts
+backend: 'local'      // datos simulados
+backend: 'node'       // http://localhost:3000
+backend: 'springboot' // http://localhost:8080
+```
+
+El cambio no requiere modificar casos de uso ni componentes.
+
+## Pruebas y documentación
+
+```powershell
+npm run test:coverage
+npm run compodoc
+```
+
+La cobertura se genera en `coverage/` y Compodoc en `documentation/`.
+
+## Módulos funcionales
+
+La aplicación incluye Usuarios, Productos, Categorías, Pedidos y Proveedores.
+Las rutas adicionales son `/categories`, `/orders` y `/suppliers`. Cada módulo
+usa un caso de uso y un contrato de repositorio; el provider selecciona la
+implementación local, Node.js o Spring Boot.
+
 ```
 src/app
 │
